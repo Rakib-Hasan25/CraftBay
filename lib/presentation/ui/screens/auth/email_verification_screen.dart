@@ -1,4 +1,6 @@
+import 'package:ecommerce/presentation/ui/screens/auth/otp_verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../utlis/image_assets.dart';
 
@@ -52,6 +54,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 ),
                 TextFormField(
                   //validation er bepar ase tai
+                  decoration: InputDecoration(
+                    hintText: 'Email'
+                  ),
+
                 ),
                 const SizedBox(
                   height: 16,
@@ -59,7 +65,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 SizedBox(
                   width: double.infinity,
                     child: ElevatedButton(
-                        onPressed: () {}, child: Text('Next')))
+                        onPressed: () {
+                          Get.to(OTPVerificationScreen());
+                        }, child: Text('Next')))
               ],
             ),
           ),
