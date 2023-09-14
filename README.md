@@ -3,6 +3,7 @@
 A ecommerce project
 
 ## Project Structure
+layering architecture
 |__ecommerce/
     |__data
     |__presentation/
