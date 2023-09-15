@@ -66,7 +66,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   width: double.infinity,
                     child: ElevatedButton(
                         onPressed: () {
-                          Get.to(OTPVerificationScreen());
+                          Get.offAll(OTPVerificationScreen());
                         }, child: Text('Next')))
               ],
             ),
