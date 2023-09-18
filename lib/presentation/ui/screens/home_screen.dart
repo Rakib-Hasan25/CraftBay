@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/utlis/image_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/catagoryCard.dart';
 import '../widgets/circular_icon_button.dart';
@@ -80,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const HomeSlider(),
               HomeSectionTitle(
                 title: 'Catagories',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CatagoryListScreen()));
+                },
               ),
               SizedBox(
                 height: 8,

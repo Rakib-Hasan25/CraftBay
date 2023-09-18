@@ -1,4 +1,6 @@
+import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
 import 'package:ecommerce/presentation/ui/screens/home_screen.dart';
+import 'package:ecommerce/presentation/ui/screens/wish_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +13,11 @@ class MainBottomNavScreen extends StatefulWidget {
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   @override
-  List<Widget>_screens =[
+ final List<Widget>_screens =[
     HomeScreen(),
+    CatagoryListScreen(),
     HomeScreen(),
-    HomeScreen(),
-    HomeScreen(),
+    WishListScreen(),
 
 
   ];

@@ -18,7 +18,7 @@ class HomeSectionTitle extends StatelessWidget {
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),),
-        TextButton(onPressed: (){}, child: Text('See All')),
+        TextButton(onPressed: onTap, child: Text('See All')),
       ],
     );
   }
