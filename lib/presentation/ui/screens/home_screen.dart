@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/utlis/image_assets.dart';
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeSectionTitle(
                 title: 'Catagories',
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CatagoryListScreen()));
+                  Get.find<MainBottomNavController>().changeScreen(1);
                 },
               ),
               SizedBox(
