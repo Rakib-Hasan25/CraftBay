@@ -3,6 +3,8 @@ import 'package:ecommerce/presentation/ui/widgets/home/product_image_slider.dart
 import 'package:flutter/material.dart';
 
 import '../utlis/color_palette.dart';
+import '../widgets/SizePicker.dart';
+import '../widgets/color_picker.dart';
 import '../widgets/product_details_addtocart_container.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -39,17 +41,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Stack(
                       children: [
                         const ProductImageSlider(),
-                        AppBar(
-                          leading: const BackButton(
-                            color: Colors.black54,
-                          ),
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          title: const Text(
-                            "Product Details",
-                            style: TextStyle(color: Colors.black54),
-                          ),
-                        ),
+                        productDetailsAppBar,
                       ],
                     ),
                     Padding(
@@ -138,36 +130,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           const SizedBox(height: 16),
                           SizedBox(
                             height: 25,
-                            child: ListView.separated(
-                              itemCount: colors.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  onTap: () {
-                                    _selectedIColorndex = index;
-                                    if (mounted) {
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: colors[index],
-                                    child: _selectedIColorndex == index
-                                        ? const Icon(
-                                            Icons.done,
-                                            color: Colors.white,
-                                          )
-                                        : null,
-                                  ),
-                                );
+                            child: ColorPicker(
+                              initialSelected: 0,
+                              onSelected: (int selectedColor){
+                                _selectedIColorndex= selectedColor;
                               },
-                              separatorBuilder: (BuildContext context, int index) {
-                                return const SizedBox(
-                                  width: 8,
-                                );
-                              },
-                            ),
+                              colors: colors,
+                            )
                           ),
 
                           const SizedBox(height: 16),
@@ -187,35 +156,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           const SizedBox(height: 16),
                           SizedBox(
                             height: 25,
-                            child: ListView.separated(
-                              itemCount: sizes.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  onTap: () {
-                                    _selectedSizeIndex= index;
-                                    if (mounted) {
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                                    decoration: BoxDecoration(
-                                      border:Border.all(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: _selectedSizeIndex == index ? ColorPalette.primaryColor: null
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: Text(sizes[index]),
-                                  )
-                                );
+                            child: SizePicker(
+                              initialSelected: 0,
+                              onSelected: (int SelectedSize){
+                                _selectedSizeIndex = SelectedSize;
+
                               },
-                              separatorBuilder: (BuildContext context, int index) {
-                                return const SizedBox(
-                                  width: 8,
-                                );
-                              },
+                              sizes: sizes,
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -241,6 +188,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
+
+  AppBar get productDetailsAppBar {
+    return AppBar(
+                        leading: const BackButton(
+                          color: Colors.black54,
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        title: const Text(
+                          "Product Details",
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      );
+  }
 }
+
+
+
+
+
+
+
+
 
 
