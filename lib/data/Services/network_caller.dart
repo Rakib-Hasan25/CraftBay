@@ -12,7 +12,7 @@ class NetworkCaller {
       //respnse.body it is a string
       log(response.body);
       if (response.statusCode == 200 &&
-          jsonDecode(response.body)['status'] == 'sucess') {
+          jsonDecode(response.body)['msg'] == 'success') {
         return NetworkResponse(
             true, response.statusCode, jsonDecode(response.body));
       } else if (response.statusCode == 401) {

@@ -1,3 +1,4 @@
+import 'package:ecommerce/presentation/state_holders/email_verification_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/auth/otp_verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final TextEditingController _emailController = TextEditingController();
-  GlobalKey<FormState>_formKey = GlobalKey<FormState>() ;
+   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,34 +59,41 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     height: 16,
                   ),
                   TextFormField(
-                    //validation er bepar ase tai
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email'
-                    ),
-                    validator: (String ?text){
-                      if(text?.isEmpty == true){
-                        return "Enter Email Address";
-                      }
-                      else if(text!.isEmail==false){
-                        return 'Enter a Valid Email Adress';
-                      }
-                      return null;
-                    }
-
-                  ),
+                      //validation er bepar ase tai
+                      controller: _emailController,
+                      decoration: const InputDecoration(hintText: 'Email'),
+                      validator: (String? text) {
+                        if (text?.isEmpty ?? true) {
+                          return "Enter Email Address";
+                        } else if (text!.isEmail == false) {
+                          return 'Enter a Valid Email Adress';
+                        }
+                        return null;
+                      }),
                   const SizedBox(
                     height: 16,
                   ),
                   SizedBox(
                     width: double.infinity,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if(_formKey.currentState!.validate()){
-                              Get.offAll(OTPVerificationScreen());
+                    child: GetBuilder<EmailVerificationController>(
 
-                            }
-                          }, child: Text('Next')))
+                      builder: (controller) {
+                        if (controller.emailVerificationInprocess) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                      verifyEmail(controller);
+
+                              }
+                            },
+                            child: Text('Next'));
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -93,5 +101,22 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         ),
       ),
     );
+  }
+  Future<void> verifyEmail(EmailVerificationController controller)async{
+    final response = await controller
+        .verifyEmail(_emailController.text.trim());
+    if (response) {
+      Get.to( OTPVerificationScreen(email:_emailController.text.trim()));
+    } else {
+      if(mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'email verification failed ! Try again'),
+          ),
+        );
+      }
+    }
+
   }
 }

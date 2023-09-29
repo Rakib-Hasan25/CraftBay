@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
@@ -80,7 +81,27 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const HomeSlider(),
+
+
+
+              GetBuilder<HomeSliderController>(
+                 builder: (controller) {
+
+                   if(controller.getHomeSliderInProgress ){
+                     return const SizedBox(
+                       height: 180,
+                       child: Center(
+                         child: CircularProgressIndicator(),
+                       ),
+                     );
+                   }
+                   return HomeSlider(sliderData:controller.sliderModel.data ?? [],);
+                 }
+               ),
+
+
+
+
               HomeSectionTitle(
                 title: 'Catagories',
                 onTap: () {

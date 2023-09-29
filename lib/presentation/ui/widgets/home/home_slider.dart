@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../data/model/slider_data.dart';
 import '../../utlis/color_palette.dart';
 
 class HomeSlider extends StatefulWidget {
-  const HomeSlider({super.key});
+
+  final List<SliderData>sliderData;
+  const HomeSlider({super.key, required this.sliderData});
 
   @override
   State<HomeSlider> createState() => _HomeSliderState();
@@ -24,18 +27,41 @@ class _HomeSliderState extends State<HomeSlider> {
               onPageChanged: (int page, _) {
                 _selectedSlider.value = page;
               }),
-          items: [1, 2, 3, 4, 5].map((i) {
+          items: widget.sliderData.map((i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: BoxDecoration(color: Colors.amber),
+                    decoration: BoxDecoration(
+                        color: ColorPalette.primaryColor.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(5)
+                    ),
                     alignment: Alignment.center,
-                    child: Text(
-                      'text $i',
-                      style: TextStyle(fontSize: 16.0),
-                    ));
+                    child:Stack(
+                      children: [
+                    Image.network(i.image ?? ''),
+                        Positioned(
+                                bottom: 0,
+
+                            child:Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment:  MainAxisAlignment.end,
+                              children: [
+                                Text(i.title ?? '',style: const TextStyle(
+                                  fontSize: 18,fontWeight: FontWeight.w600,
+                                  color: Colors.white
+                                ),),
+                              ],
+                            ))
+                   
+
+                      ],
+                    )
+
+
+                );
+
               },
             );
           }).toList(),
@@ -52,7 +78,7 @@ class _HomeSliderState extends State<HomeSlider> {
                 valueListenable: _selectedSlider,
                 builder: (context, value, _) {
                   List<Widget> list = [];
-                  for (int i = 0; i < 5; i++) {
+                  for (int i = 0; i < widget.sliderData.length; i++) {
                     list.add(Container(
                       width: 15,
                       height: 15,

@@ -1,3 +1,4 @@
+import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/CartScreen.dart';
 import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
@@ -22,6 +23,51 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     CartScreen(),
     WishListScreen(),
   ];
+
+
+  /*Home Slider er api ta amra ekane call koracci (MainBOttomNavScreen)
+  karon amader ei screen ta ekbar oi call hocce jokon app ta run hoi
+  but , jodi home screen e run korai , tobe dekha jabhe jotho bar e
+  home screen e jaccci totho bar oi run hobe
+
+  => jehoto homescreen e besi bar jabho but MainBottomNavScreen e ekbar e jabho
+  tai api ta ekane call kora hocce;
+
+
+
+
+  => basically amra oi api er controller ke call korchi;
+  */
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<HomeSliderController>().getHomeSlider();
+    });
+    super.initState();
+  }
+
+  /* ===>above code brief
+
+Widgetbinding holo ekta class jetha shokol widget ke maintain kore
+addPostFrameCallBack -- jokon all widgets arrage hoi jai, tokon kiso specific
+task koro ,
+(_){} emon ekta kaaj kore dewa , jekane fuction argument hisabe jetha use
+hoi sheta function body er kaaj e dorkar nai
+
+  Get.find<HomeSliderController>().getHomeSlider(); specfic kaaj ta holo
+  HomeSliderController ke kujhe er get HomeSlider() function ke call
+  korai daw
+*/
+
+
+
+
+
+
+
+
 
   Widget build(BuildContext context) {
     return GetBuilder<MainBottomNavController>(builder: (controller) {
