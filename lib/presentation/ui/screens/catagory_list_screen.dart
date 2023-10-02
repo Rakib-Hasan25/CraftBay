@@ -1,3 +1,4 @@
+import 'package:ecommerce/presentation/state_holders/catagory_controller.dart';
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/widgets/catagoryCard.dart';
@@ -12,11 +13,10 @@ class CatagoryListScreen extends StatefulWidget {
 }
 
 class _CatagoryListScreenState extends State<CatagoryListScreen> {
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         Get.find<MainBottomNavController>().backToHome();
 
         return false;
@@ -25,26 +25,48 @@ class _CatagoryListScreenState extends State<CatagoryListScreen> {
         appBar: AppBar(
           backgroundColor: ColorPalette.primaryColor,
           elevation: 0,
-          leading:IconButton(
-            onPressed: (){
+          leading: IconButton(
+            onPressed: () {
               Get.find<MainBottomNavController>().backToHome();
             },
-            icon: Icon(Icons.arrow_back,color: Colors.black54,),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black54,
+            ),
           ),
-          title: const Text("Catagory",style: TextStyle(color: Colors.black),),
+          title: const Text(
+            "Catagory",
+            style: TextStyle(color: Colors.black),
+          ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16
-          ), itemBuilder: (context,index){
-            return FittedBox(child: const CatagoryCard());
-          }),
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            Get.find<CategoryController>().getCategoryList();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GetBuilder<CategoryController>(builder: (controller) {
+              if(controller.getCategoryListInProgress){
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return GridView.builder(
+                  itemCount: controller.categoryListModel.data?.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16),
+                  itemBuilder: (context, index) {
+                    return FittedBox(
+                        child: CatagoryCard(
+                      categoryData: controller.categoryListModel.data![index],
+                    ));
+                  });
+            }),
+          ),
         ),
       ),
     );
   }
 }
-

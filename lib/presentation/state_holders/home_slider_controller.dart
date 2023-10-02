@@ -11,9 +11,9 @@ import 'package:get/get.dart';
 import '../../data/utility/Urls.dart';
 
 class HomeSliderController extends GetxController{
-  SliderModel _sliderModel =SliderModel();
+  CategoryListModel _sliderModel =CategoryListModel();
 
-  SliderModel get sliderModel =>_sliderModel;
+  CategoryListModel get sliderModel =>_sliderModel;
 
   bool _getHomeSliderInProgress = false;
 
@@ -28,7 +28,7 @@ class HomeSliderController extends GetxController{
     _getHomeSliderInProgress = false;
     update();
     if(response.isSuccess){
-      _sliderModel =SliderModel.fromJson(response.responseJson ?? {});
+      _sliderModel =CategoryListModel.fromJson(response.responseJson ?? {});
       update();
       return true;
     }else{

@@ -1,5 +1,7 @@
+import 'package:ecommerce/presentation/state_holders/catagory_controller.dart';
 import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/CartScreen.dart';
 import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
 import 'package:ecommerce/presentation/ui/screens/home_screen.dart';
@@ -7,6 +9,9 @@ import 'package:ecommerce/presentation/ui/screens/wish_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../state_holders/new_product_controller.dart';
+import '../../state_holders/special_product_controller.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});
@@ -44,6 +49,14 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<HomeSliderController>().getHomeSlider();
+      Get.find<CategoryController>().getCategoryList();
+      Get.find<PopularProductController>().getPopularProducts();
+      Get.find<NewProductController>().getNewProducts();
+      Get.find<SpecialProductController>().getSpecialProducts();
+
+
+
+
     });
     super.initState();
   }
@@ -60,13 +73,6 @@ hoi sheta function body er kaaj e dorkar nai
   HomeSliderController ke kujhe er get HomeSlider() function ke call
   korai daw
 */
-
-
-
-
-
-
-
 
 
   Widget build(BuildContext context) {

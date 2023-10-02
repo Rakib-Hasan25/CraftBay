@@ -1,12 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
+import 'package:ecommerce/presentation/state_holders/special_product_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
+import 'package:ecommerce/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/utlis/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../state_holders/catagory_controller.dart';
+import '../../state_holders/new_product_controller.dart';
 import '../widgets/catagoryCard.dart';
 import '../widgets/circular_icon_button.dart';
 import '../widgets/home/ProductCard.dart';
@@ -38,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.person,
                 onTap: () {},
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               CircularIconButton(
                 icon: Icons.call,
                 onTap: () {},
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               CircularIconButton(
@@ -65,15 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: InputDecoration(
                       fillColor: Colors.grey.shade200,
                       filled: true,
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       hintText: "Search",
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                       )),
                 ),
@@ -108,35 +113,57 @@ class _HomeScreenState extends State<HomeScreen> {
                   Get.find<MainBottomNavController>().changeScreen(1);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               SizedBox(
                 height: 100,
-                child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return CatagoryCard();
-                    }),
+                child: GetBuilder<CategoryController>(
+
+                  builder: (controller) {
+                    if(controller.getCategoryListInProgress){
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                        itemCount: controller.categoryListModel.data?.length ?? 0,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return CatagoryCard(categoryData: controller.categoryListModel.data![index]);
+                        });
+                  }
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               HomeSectionTitle(
                 title: 'Popular',
-                onTap: () {},
+                onTap: () {
+                  Get.to(const ProductListScreen());
+
+                },
               ),
               SizedBox(
                 height: 190,
-                child: ListView.builder(
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ProductCard();
-                    }),
+                child: GetBuilder<PopularProductController>(
+                  builder: (controller) {
+                    if(controller.getPopularProductsInProgress){
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView.builder(
+                        itemCount: controller.PopularProductModel.data?.length ?? 0,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return ProductCard(productData: controller.PopularProductModel.data![index] ,);
+                        });
+                  }
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               HomeSectionTitle(
@@ -145,14 +172,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(
                 height: 190,
-                child: ListView.builder(
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ProductCard();
-                    }),
+                child: GetBuilder<NewProductController>(
+                    builder: (controller) {
+                      if(controller.getNewProductsInProgress){
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return ListView.builder(
+                          itemCount: controller.NewProductModel.data?.length ?? 0,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return ProductCard(productData: controller.NewProductModel.data![index],);
+                          });
+                    }
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               HomeSectionTitle(
@@ -161,13 +198,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(
                 height: 190,
-                child: ListView.builder(
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ProductCard();
-                    }),
-              )
+                child: GetBuilder<SpecialProductController>(
+                    builder: (controller) {
+                      if(controller.getSpecialProductsInProgress){
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView.builder(
+                          itemCount: controller.SpecialProductModel.data?.length??0,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return ProductCard(productData: controller.SpecialProductModel.data![index],);
+                          });
+                    }
+                ),
+              ),
             ],
           ),
         ),

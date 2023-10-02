@@ -28,6 +28,7 @@ class EmailVerificationController extends GetxController{
       _message=response.responseJson['data']?? '';
         return true;
     }else{
+      _message = "email verificaiton failed";
       return false;
 
     }

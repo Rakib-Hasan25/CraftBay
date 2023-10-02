@@ -1,3 +1,4 @@
+import 'package:ecommerce/data/model/product_data.dart';
 import 'package:ecommerce/presentation/ui/screens/prdduct_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,16 +7,16 @@ import '../../utlis/color_palette.dart';
 
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-  });
+  ProductData productData;
+  ProductCard({
+    super.key,required this.productData});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: (){
-        Get.to(ProductDetailsScreen());
+        Get.to(const ProductDetailsScreen());
       },
       child: Card(
         shadowColor: ColorPalette.primaryColor.withOpacity(0.1),
@@ -36,27 +37,24 @@ class ProductCard extends StatelessWidget {
                       color: ColorPalette.primaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
 
-
-
                       image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/shoe.png'
-                          )
-                      )),
+                          image: NetworkImage(productData.image ?? "")
+
+                  ),
 
 
                 ),
               ),
 
-
-              Padding(
+              ),
+          Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Text(
-                      'Nike shoe Ak3635',
+                      productData.title ?? '',
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.blueGrey,
                           overflow: TextOverflow.ellipsis),
@@ -64,7 +62,7 @@ class ProductCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('\$90',style: TextStyle(
+                        Text('\$${productData.price}',style: const TextStyle(
                             fontSize: 13,
                             color: ColorPalette.primaryColor,
                             fontWeight: FontWeight.w500
@@ -72,22 +70,22 @@ class ProductCard extends StatelessWidget {
                         Wrap(
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.star_border,
                               size: 15,
                               color: Colors.amber,
                             ),
-                            Text('4.8',style: TextStyle(
+                            Text(productData.star.toString() ?? '',style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.blueGrey,
                                 fontSize: 13,
                                 overflow: TextOverflow.ellipsis) ,),
                           ],
                         ),
-                        Card(
+                        const Card(
                           color: ColorPalette.primaryColor,
                           child: Padding(
-                            padding: const EdgeInsets.all(2.0),
+                            padding: EdgeInsets.all(2.0),
                             child: Icon(
                               Icons.favorite_border,
                               size: 12,
