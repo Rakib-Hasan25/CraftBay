@@ -4,7 +4,7 @@ import 'brand.dart';
 
 class ProductData {
   ProductData({
-    num? id,
+    int? id,
     String? title,
     String? shortDes,
     String? price,
@@ -56,7 +56,7 @@ class ProductData {
     _brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
     _category = json['category'] != null ? CategoryListData.fromJson(json['category']) : null;
   }
-  num? _id;
+  int? _id;
   String? _title;
   String? _shortDes;
   String? _price;
@@ -72,7 +72,7 @@ class ProductData {
   String? _updatedAt;
   Brand? _brand;
   CategoryListData? _category;
-  ProductData copyWith({  num? id,
+  ProductData copyWith({  int? id,
     String? title,
     String? shortDes,
     String? price,
@@ -105,7 +105,7 @@ class ProductData {
     brand: brand ?? _brand,
     category: category ?? _category,
   );
-  num? get id => _id;
+  int? get id => _id;
   String? get title => _title;
   String? get shortDes => _shortDes;
   String? get price => _price;

@@ -6,6 +6,7 @@ import 'package:ecommerce/presentation/state_holders/catagory_controller.dart';
 import 'package:ecommerce/presentation/state_holders/email_verification_controller.dart';
 import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
+import 'package:ecommerce/presentation/state_holders/product_details_controller.dart';
 import 'package:get/get.dart';
 
 import '../presentation/state_holders/main_bottom_nav_controller.dart';
@@ -25,6 +26,8 @@ class StateHolderBinder extends Bindings{
     Get.put(PopularProductController());
     Get.put(NewProductController());
     Get.put(SpecialProductController());
+    Get.put(ProductDetailsController());
+
   }
 
 }

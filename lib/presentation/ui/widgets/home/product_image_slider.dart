@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../data/model/product_data.dart';
 import '../../utlis/color_palette.dart';
 
 class ProductImageSlider extends StatefulWidget {
-  const ProductImageSlider({super.key});
+  final List<String> imageList;
+  ProductImageSlider({super.key, required this.imageList});
 
   @override
   State<ProductImageSlider> createState() => _ProductImageSliderState();
@@ -25,23 +27,24 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
               onPageChanged: (int page, _) {
                 _selectedSlider.value = page;
               }),
-          items: [1, 2, 3, 4, 5].map((i) {
+          items: widget.imageList.map((imageUrl) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
-                    width: MediaQuery.of(context).size.width,
-                    // margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: BoxDecoration(color: Colors.grey.shade400),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'image $i',
-                      style: TextStyle(fontSize: 16.0),
-                    ));
+                  width: MediaQuery.of(context).size.width,
+                  // margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    image: DecorationImage(
+                      image: NetworkImage(imageUrl),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                );
               },
             );
           }).toList(),
         ),
-
         Positioned(
           bottom: 10,
           child: Row(
@@ -53,7 +56,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                   valueListenable: _selectedSlider,
                   builder: (context, value, _) {
                     List<Widget> list = [];
-                    for (int i = 0; i < 5; i++) {
+                    for (int i = 0; i < widget.imageList.length; i++) {
                       list.add(Container(
                         width: 15,
                         height: 15,
@@ -61,8 +64,9 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
                         decoration: BoxDecoration(
                             // border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(10),
-                            color:
-                                (value == i) ? ColorPalette.primaryColor : Colors.white),
+                            color: (value == i)
+                                ? ColorPalette.primaryColor
+                                : Colors.white),
                       ));
                     }
                     return Row(

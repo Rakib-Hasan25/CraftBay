@@ -41,9 +41,5 @@ CategoryListModel copyWith({  String? msg,
 
 }
 
-/// id : 1
-/// categoryName : "Electronics"
-/// categoryImg : "https://photo.teamrabbil.com/images/2023/04/04/Group-1058.png"
-/// created_at : "2023-02-19T09:03:01.000000Z"
-/// updated_at : "2023-04-04T15:23:17.000000Z"
+
 
