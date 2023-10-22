@@ -130,7 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: controller.categoryListModel.data?.length ?? 0,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return CatagoryCard(categoryData: controller.categoryListModel.data![index]);
+                          return CatagoryCard(
+                              categoryData: controller.categoryListModel.data![index],
+                            onTap: (){
+                                Get.to(controller.categoryListModel.data![index].id!.toInt());
+                            },
+                          );
                         });
                   }
                 ),
@@ -141,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeSectionTitle(
                 title: 'Popular',
                 onTap: () {
-                  Get.to(const ProductListScreen());
+                  // Get.to(ProductListScreen());
 
                 },
               ),

@@ -1,5 +1,6 @@
 import 'package:ecommerce/presentation/state_holders/catagory_controller.dart';
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecommerce/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/widgets/catagoryCard.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,9 @@ class _CatagoryListScreenState extends State<CatagoryListScreen> {
                     return FittedBox(
                         child: CatagoryCard(
                       categoryData: controller.categoryListModel.data![index],
+                          onTap: (){
+                            Get.to(ProductListScreen(categoryId:controller.categoryListModel.data![index].id!.toInt() ));
+                          },
                     ));
                   });
             }),

@@ -1,12 +1,7 @@
-
-
-
 import 'dart:core';
-
 import 'package:ecommerce/data/Services/network_caller.dart';
 import 'package:ecommerce/data/model/network_response.dart';
 import 'package:get/get.dart';
-
 import '../../data/model/CategoryListModel.dart';
 import '../../data/utility/Urls.dart';
 
