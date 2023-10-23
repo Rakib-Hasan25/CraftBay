@@ -1,5 +1,4 @@
-import 'package:ecommerce/data/model/product_data.dart';
-import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
+import 'package:ecommerce/data/model/Product_Model.dart';
 import 'package:ecommerce/presentation/state_holders/product_list_controller.dart';
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/widgets/home/ProductCard.dart';
@@ -7,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({super.key,required this.categoryId});
-  final int categoryId;
+  const ProductListScreen({super.key,this.categoryId,this.productModel});
+  final int? categoryId;
+  final ProductModel? productModel;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -19,7 +19,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
   void initState() {
 
 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  Get.find<ProductListController>().getProductsByCategory(widget.categoryId);
+
+  if(widget.categoryId !=null){
+    Get.find<ProductListController>().getProductsByCategory(widget.categoryId!);
+  }
+  else if(widget.productModel!=null){
+    Get.find<ProductListController>().setProducts(widget.productModel!);
+  }
+
 });
 
     super.initState();
@@ -73,10 +80,10 @@ WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
 
 
-//
+
 // class ProductListScreen extends StatefulWidget {
-//   const ProductListScreen({super.key,required this.categoryId});
-//   final int categoryId;
+//   const ProductListScreen({super.key,});
+//
 //
 //   @override
 //   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -84,14 +91,6 @@ WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 //
 // class _ProductListScreenState extends State<ProductListScreen> {
 //   @override
-//   void initState() {
-//
-//     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-//       Get.find<ProductListController>().getProductsByCategory(widget.categoryId);
-//     });
-//
-//     super.initState();
-//   }
 //
 //
 //   @override
