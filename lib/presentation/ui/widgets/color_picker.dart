@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
+
+import '../utlis/color_palette.dart';
 class ColorPicker extends StatefulWidget {
   ColorPicker({super.key,required this.onSelected,required this.initialSelected,required this.colors});
-  List<Color>colors;
+  List<String>colors;
   final Function(int selectIndex) onSelected;
   final int initialSelected;
 
@@ -11,7 +13,7 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  int  _selectedIColorndex=0;
+  int  _selectedIColorndex = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -34,16 +36,16 @@ class _ColorPickerState extends State<ColorPicker> {
               setState(() {});
             }
           },
-          child: CircleAvatar(
-            radius: 15,
-            backgroundColor: widget.colors[index],
-            child: _selectedIColorndex == index
-                ? const Icon(
-              Icons.done,
-              color: Colors.white,
-            )
-                : null,
-          ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+                border:Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(4),
+                color: _selectedIColorndex == index ? ColorPalette.primaryColor: null
+            ),
+            alignment: Alignment.center,
+            child: Text(widget.colors[index]),
+          )
         );
       },
       separatorBuilder: (BuildContext context, int index) {

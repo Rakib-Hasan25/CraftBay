@@ -46,7 +46,8 @@ class _CatagoryListScreenState extends State<CatagoryListScreen> {
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: GetBuilder<CategoryController>(builder: (controller) {
+            child: GetBuilder<CategoryController>
+              (builder: (controller) {
               if(controller.getCategoryListInProgress){
                 return const Center(
                   child: CircularProgressIndicator(),

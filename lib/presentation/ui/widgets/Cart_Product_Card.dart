@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/model/cart_list_model.dart';
 import '../utlis/color_palette.dart';
 import 'custon_stepper.dart';
 
 class CartProductCard extends StatelessWidget {
-  const CartProductCard({
+  final CartData cartData;
+    const CartProductCard({
     super.key,
+    required this.cartData
   });
 
   @override
@@ -19,13 +22,13 @@ class CartProductCard extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
                     image: NetworkImage(
-                        'https://media.istockphoto.com/id/1303978937/photo/white-sneaker-on-a-blue-gradient-background-mens-fashion-sport-shoe-sneakers-lifestyle.webp?b=1&s=612x612&w=0&k=20&c=cNLaucibZy5Vq4r7dOCt9CNam6lejW3Zxw0Vho_z0mo='))),
+                       cartData.product?.image ?? ""))),
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           Expanded(
@@ -40,34 +43,36 @@ class CartProductCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Bata New Shoe a#sdfsdf',
+                        Text(
+                            cartData.product?.title ?? '',
                             style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
                           const SizedBox(
                             height: 4,
                           ),
                           RichText(
-                              text: const TextSpan(
-                                  style: TextStyle(
+                              text: TextSpan(
+                                  style: const TextStyle(
                                       color: Colors.black54, fontSize: 12),
                                   children: [
-                                TextSpan(text: 'Color : Black '),
-                                TextSpan(text: 'Size : XL'),
+                                TextSpan(text: 'Color : ${cartData.color ?? ''} '),
+                                 TextSpan(text: 'Size : ${cartData.size ?? ''}'),
                               ]))
                         ],
                       ),
                     ),
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.delete_outline))
+                        onPressed: () {
+
+                        }, icon: Icon(Icons.delete_outline))
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      '\$1000',
-                      style: TextStyle(
+                    Text(
+                      '\$${cartData.product?.price ?? ''}',
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
                           color: ColorPalette.primaryColor),
@@ -80,7 +85,9 @@ class CartProductCard extends StatelessWidget {
                             upperLimit: 10,
                             stepValue: 1,
                             value: 1,
-                            onChange: (newvalue) {}),
+                            onChange: (newvalue) {
+
+                            }),
                       ),
                     ),
                   ],

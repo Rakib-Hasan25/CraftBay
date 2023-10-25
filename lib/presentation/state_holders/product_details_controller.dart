@@ -16,17 +16,26 @@ class ProductDetailsController extends GetxController{
   String _errorMessage ='';
   String get errorMessage =>_errorMessage;
 
-  
-  
-  
+
+  List<String>_availableSizes=[];
+  List<String>_availableColors=[];
+
+  List<String> get availableColors =>_availableColors;
+  List<String> get availableSizes =>_availableSizes;
+
+
   Future<bool>getProductDetails(int id)async{
     productDetailsInProgress = false;
     update();
-    NetworkResponse response = await NetworkCaller().getRequest(Urls.getProductDetails(id));
+    NetworkResponse response = await NetworkCaller.getRequest(Urls.getProductDetails(id));
     if(response.isSuccess){
 
       _productDetailsData = ProductDetailsModel.fromJson(response.responseJson ?? {}).data!.first;
       //amra url theke sob product er details peyeci kinto amader lagbe first product ta
+
+      _convertStringToColors(_productDetailsData.color ?? '');
+
+      _convertStringToSizes(_productDetailsData.size??'');
       update();
       return true;
     }
@@ -36,5 +45,12 @@ class ProductDetailsController extends GetxController{
       return false;
     }
 }
+    void _convertStringToSizes(String sizes){
+      _availableSizes = sizes.split(',');
+    }
+  void _convertStringToColors(String colors){
+    _availableColors = colors.split(',');
+  }
+
   
 }

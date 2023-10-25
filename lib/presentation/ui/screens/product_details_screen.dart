@@ -1,14 +1,13 @@
+import 'package:ecommerce/data/model/product_details_data.dart';
 import 'package:ecommerce/presentation/state_holders/product_details_controller.dart';
-import 'package:ecommerce/presentation/ui/utlis/color_extension.dart';
 import 'package:ecommerce/presentation/ui/widgets/custon_stepper.dart';
 import 'package:ecommerce/presentation/ui/widgets/home/product_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ecommerce/data/model/product_details_data.dart';
+import '../../state_holders/add_to_cart_controller.dart';
 import '../utlis/color_palette.dart';
 import '../widgets/SizePicker.dart';
 import '../widgets/color_picker.dart';
-import '../widgets/product_details_addtocart_container.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
 
@@ -20,17 +19,12 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  List<Color> colors = [];
 
-  List<String> sizes = ['S', 'L', 'M', 'XL', 'XXL'];
-
-  int _selectedIColorndex = 0;
-  int _selectedSizeIndex = 0;
-
+  int _selectedSizeIndex =0;
+  int _selectedColorindex =0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<ProductDetailsController>().getProductDetails(widget.productId);
@@ -48,8 +42,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-
-
             return SafeArea(
               child: Column(
                 children: [
@@ -73,7 +65,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ),
                   ),
-                  product_details_addtocart_container()
+                  cartToCartBottomContainer(
+                     controller.productDetailsData,
+                     controller.availableSizes ,
+                     controller.availableColors,
+
+                  )
+
                 ],
               ),
             );
@@ -97,7 +95,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Padding productDetails(ProductDetailsController controller) {
-    convertStringToColor(controller.productDetailsData.color ?? "");
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -118,7 +115,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   upperLimit: 10,
                   stepValue: 1,
                   value: 1,
-                  onChange: (newValue) {})
+                  onChange: (newValue) {
+
+                  })
             ],
           ),
           Row(
@@ -182,9 +181,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               child: ColorPicker(
                 initialSelected: 0,
                 onSelected: (int selectedColor) {
-                  _selectedIColorndex = selectedColor;
+                  _selectedColorindex = selectedColor;
                 },
-                colors: colors,
+                colors: controller.productDetailsData.color?.split(',') ?? [],
               )
           ),
 
@@ -206,8 +205,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             height: 25,
             child: SizePicker(
               initialSelected: 0,
-              onSelected: (int SelectedSize) {
-                _selectedSizeIndex = SelectedSize;
+              onSelected: (int selectedSize) {
+                _selectedSizeIndex = selectedSize;
+
               },
               sizes: controller.productDetailsData.size?.split(',') ?? [],
             ),
@@ -228,12 +228,79 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
 
-  void convertStringToColor(String color) {
-    final List<String>splittedColors = color.split(',');
-    for (String c in splittedColors) {
-      colors.add(HexColor.fromHex(c));
-    }
+  Container cartToCartBottomContainer(ProductDetailsData productDetailsData,
+      List<String>colors,List<String>sizes ){
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+      decoration: BoxDecoration(
+          color: ColorPalette.primaryColor.withOpacity(0.1),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16)
+          )
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Price',style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.black54
+              ),),
+              SizedBox(height: 4,),
+              Text('\$${2000}',style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  color: ColorPalette.primaryColor
+              )),
+            ],
+          ),
+          SizedBox(
+              width: 120,
+              child: GetBuilder<AddToCartController>(
+                  builder: (controller) {
+                    if(controller.addToCartInProgress){
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+
+                    return ElevatedButton(
+                        onPressed: ()async{
+                      final result = await controller.addToCart(
+                          productDetailsData.id!,
+                          colors[_selectedColorindex],
+                          sizes[_selectedSizeIndex],
+                          1
+                      ).then((result) {
+                        Get.snackbar('Added to Cart',
+                            "this product has been added to cart list",
+                        snackPosition: SnackPosition.BOTTOM);
+
+                      });
+                    },
+                        child:const Text('Add to cart'));
+                  }
+              )),
+        ],
+
+      ),
+    );
   }
+
+
+  // void convertStringToColor(String color) {
+  //   final List<String>splittedColors = color.split(',');
+  //   for (String c in splittedColors) {
+  //     // colors.add(HexColor.fromHex(c));
+  //     colors.add(c);
+  //
+  //   }
+  // }
 
 }
 

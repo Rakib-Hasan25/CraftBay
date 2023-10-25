@@ -2,6 +2,7 @@ import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../state_holders/CartListcontroller.dart';
 import '../widgets/Cart_Product_Card.dart';
 import '../widgets/product_details_addtocart_container.dart';
 
@@ -14,6 +15,18 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   @override
+
+
+  void initState() {
+
+    WidgetsBinding.instance.addPostFrameCallback((_)
+    {
+      Get.find<CartListController>().getCartList();
+    });
+
+
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,18 +46,30 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return CartProductCard();
-              },
-            ),
-          ),
-          product_details_addtocart_container(),
-        ],
+      body: GetBuilder<CartListController>(
+        builder: (controller) {
+
+          if(controller.addToCartInProgress){
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.cartListModel.data!.length??0,
+                  itemBuilder: (context, index) {
+                    return CartProductCard(cartData:controller.cartListModel.data![index]);
+                  },
+                ),
+              ),
+              // product_details_addtocart_container(),
+            ],
+          );
+        }
       ),
     );
   }

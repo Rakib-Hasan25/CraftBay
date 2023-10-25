@@ -22,7 +22,7 @@ class ProductListController extends GetxController{
   Future<bool>getProductsByCategory(int categoryId)async{
     _getProductListInProgress = true;
     update();// rebuild get builder
-    final NetworkResponse response  = await NetworkCaller().
+    final NetworkResponse response  = await NetworkCaller.
     getRequest(Urls.getProductByCategory(categoryId));
     _getProductListInProgress = false;
     update();

@@ -18,7 +18,7 @@ class NewProductController extends GetxController {
     _getNewProductInProgress = true;
     update();
     final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.getProductByRemarks('New'));
+        await NetworkCaller.getRequest(Urls.getProductByRemarks('New'));
     _getNewProductInProgress = false;
     if (response.isSuccess){
       _newProductModel = ProductModel.fromJson(response.responseJson ?? {} );

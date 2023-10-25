@@ -60,7 +60,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
                 PinCodeTextField(
                   controller: otpController,
-                  length: 4,
+                  length: 6,
                   obscureText: false,
                   animationType: AnimationType.fade,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
