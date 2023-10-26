@@ -3,13 +3,13 @@ import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
 import 'package:ecommerce/presentation/state_holders/special_product_controller.dart';
-import 'package:ecommerce/presentation/ui/screens/catagory_list_screen.dart';
+import 'package:ecommerce/presentation/state_holders/theme_mode_controller.dart';
 import 'package:ecommerce/presentation/ui/screens/product_list_screen.dart';
-import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:ecommerce/presentation/ui/utlis/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../application/app.dart';
 import '../../state_holders/catagory_controller.dart';
 import '../../state_holders/new_product_controller.dart';
 import '../widgets/catagoryCard.dart';
@@ -56,6 +56,31 @@ class _HomeScreenState extends State<HomeScreen> {
               CircularIconButton(
                 icon: Icons.notification_important,
                 onTap: () {},
+              ),
+
+              const SizedBox(
+                width: 10,
+              ),
+              CircularIconButton(
+                icon: Icons.light_mode_outlined,
+                onTap: () {
+
+                  //1 way to change mode
+                  // if(Get.isDarkMode){
+                  //   Get.changeThemeMode(ThemeMode.light);
+                  // }
+                  // else{
+                  //   Get.changeThemeMode(ThemeMode.dark);
+                  //
+                  // }
+
+                  //2nd way to change mode
+
+                  themeModeController.toggleThemeMode();
+
+
+
+                },
               ),
             ],
           )),

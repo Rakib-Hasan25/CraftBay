@@ -1,4 +1,6 @@
+import 'package:ecommerce/presentation/state_holders/CartListcontroller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../data/model/cart_list_model.dart';
 import '../utlis/color_palette.dart';
@@ -63,7 +65,7 @@ class CartProductCard extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
-
+                          Get.find<CartListController>().removeFromCart(cartData.productId!);
                         }, icon: Icon(Icons.delete_outline))
                   ],
                 ),
@@ -84,8 +86,10 @@ class CartProductCard extends StatelessWidget {
                             lowerLimit: 1,
                             upperLimit: 10,
                             stepValue: 1,
-                            value: 1,
-                            onChange: (newvalue) {
+                            value: cartData.numberofItem ?? 1,
+                            onChange: (int value) {
+                              // print(value);
+                              Get.find<CartListController>().addItem(cartData.id!,value );
 
                             }),
                       ),

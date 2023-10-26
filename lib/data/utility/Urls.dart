@@ -10,7 +10,7 @@ class Urls{
   static String getProductDetails(int id) => '$_baseUrl/ProductDetailsById/$id';
   static String addToCart = '$_baseUrl/CreateCartList';
   static String getCartList = '$_baseUrl/CartList';
-
+  static String removeFromCart(int id) => '$_baseUrl/DeleteCartList/$id';
 
 
 

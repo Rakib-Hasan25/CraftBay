@@ -11,6 +11,7 @@ import 'package:ecommerce/presentation/state_holders/home_slider_controller.dart
 import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
 import 'package:ecommerce/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce/presentation/state_holders/product_list_controller.dart';
+import 'package:ecommerce/presentation/state_holders/theme_mode_controller.dart';
 import 'package:get/get.dart';
 
 import '../presentation/state_holders/main_bottom_nav_controller.dart';
@@ -34,8 +35,8 @@ class StateHolderBinder extends Bindings{
     Get.put(ProductListController());
     Get.put(CartListController());
     Get.put(AddToCartController());
-
-
+    Get.put(ThemeModeController());// ei controller ta getx extend kore nai
+    //eta get.put korar por amra ei controller er instanace create kora chara use korte parbo
 
 
 

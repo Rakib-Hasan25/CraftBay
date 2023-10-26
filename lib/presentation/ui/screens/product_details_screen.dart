@@ -22,6 +22,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   int _selectedSizeIndex =0;
   int _selectedColorindex =0;
+  int quantity =1;
 
   @override
   void initState() {
@@ -116,7 +117,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   stepValue: 1,
                   value: 1,
                   onChange: (newValue) {
-
+                        quantity = newValue;
                   })
             ],
           ),
@@ -242,20 +243,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Price',style: TextStyle(
+              const Text('Price',style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: Colors.black54
               ),),
               SizedBox(height: 4,),
-              Text('\$${2000}',style: TextStyle(
+              Text('\$${productDetailsData.product?.price ?? 0}',
+                  style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
                   color: ColorPalette.primaryColor
-              )),
+              )
+              ),
             ],
           ),
           SizedBox(
@@ -275,7 +278,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           productDetailsData.id!,
                           colors[_selectedColorindex],
                           sizes[_selectedSizeIndex],
-                          1
+                          quantity
                       ).then((result) {
                         Get.snackbar('Added to Cart',
                             "this product has been added to cart list",
