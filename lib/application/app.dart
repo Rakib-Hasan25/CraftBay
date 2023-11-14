@@ -11,12 +11,13 @@ import 'package:get/get.dart';
 
 
 //globally object nicci eta sobai use korte parbe   crafty bay er bitor jara ase
+
+
 final ThemeModeController themeModeController =ThemeModeController();
 
-
 class CraftBay extends StatefulWidget {
-  static GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
 
+  static GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
   const CraftBay({super.key});
 
   @override
@@ -24,6 +25,8 @@ class CraftBay extends StatefulWidget {
 }
 
 class _CraftBayState extends State<CraftBay> {
+
+
   late final StreamSubscription _connectivityStatusStream;
 
   @override
@@ -33,6 +36,8 @@ class _CraftBayState extends State<CraftBay> {
     checkInternetConncectivityStatus();
     super.initState();
   }
+
+
 
 
   void checkInitialInternetConnection()async{
@@ -68,7 +73,7 @@ class _CraftBayState extends State<CraftBay> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: themeModeController.themeMode,
+        valueListenable: themeModeController.themeNotifier,
         builder:(context,themeMode, _)
        {
         return GetMaterialApp(
@@ -79,13 +84,16 @@ class _CraftBayState extends State<CraftBay> {
           theme: ThemeData(
               primarySwatch: MaterialColor(
                   ColorPalette.primaryColor.value, ColorPalette().color),
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.white, // Customize app bar color
+              ),
 
               // for every elevated button same design
 
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 12),
-                      textStyle:  TextStyle(
+                      textStyle:  const TextStyle(
                           fontSize: 14,
                           letterSpacing: 0.5,
                           fontWeight: FontWeight.w600),
@@ -117,12 +125,13 @@ class _CraftBayState extends State<CraftBay> {
               primarySwatch: MaterialColor(
                   ColorPalette.primaryColor.value, ColorPalette().color),
 
+
               // for every elevated button same design
 
               elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      textStyle:  TextStyle(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      textStyle:  const TextStyle(
                           fontSize: 14,
                           letterSpacing: 0.5,
                           fontWeight: FontWeight.w600),
@@ -143,8 +152,6 @@ class _CraftBayState extends State<CraftBay> {
           ),
           themeMode: themeMode,//eikhane jetha takbe oitar birthite theme ta takbe
         );
-
-
       }
     );
   }

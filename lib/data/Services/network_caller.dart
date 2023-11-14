@@ -13,11 +13,9 @@ class NetworkCaller {
   static Future<NetworkResponse> getRequest(String url) async {
     try {
       Response response = await get(Uri.parse(url),
-
           headers: {
           'token': AuthController.accessToken.toString()
           }
-
       );
 
       log(response.statusCode.toString());
@@ -67,7 +65,7 @@ class NetworkCaller {
   }
 
   static Future<void> goToLogin()async {
-    await AuthController.clear();
+    await AuthController.clear();//expair access token ke delete kore
     Navigator.pushAndRemoveUntil(CraftBay.globalKey.currentContext!,
         MaterialPageRoute(builder: (context)=> EmailVerificationScreen()), (route) => false);
 

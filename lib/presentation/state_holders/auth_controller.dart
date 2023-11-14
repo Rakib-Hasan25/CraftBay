@@ -22,11 +22,7 @@ class AuthController {
     final SharedPreferences sharedPreferences =
     await SharedPreferences.getInstance();
     sharedPreferences.clear();
-
   }
-
-
-
 
   static bool get isLoggedIn {
     if(_accessToken != null) {

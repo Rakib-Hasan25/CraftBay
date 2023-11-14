@@ -30,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.white,
           elevation: 0,
           title: Row(
             children: [
@@ -63,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               CircularIconButton(
                 icon: Icons.light_mode_outlined,
-                onTap: () {
+                onTap: () async{
 
                   //1 way to change mode
                   // if(Get.isDarkMode){
@@ -76,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   //2nd way to change mode
 
-                  themeModeController.toggleThemeMode();
+                  await themeModeController.toggleThemeMode();
 
 
 
@@ -89,21 +88,21 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(17.0),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: TextField(
                   decoration: InputDecoration(
-                      fillColor: Colors.grey.shade200,
+                      // fillColor: Colors.grey.shade200,
                       filled: true,
-                      prefixIcon: const Icon(Icons.search),
+                      prefixIcon: Icon(Icons.search),
                       hintText: "Search",
-                      border: const OutlineInputBorder(
+                      border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
-                      focusedBorder: const OutlineInputBorder(
+                      focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
-                      enabledBorder: const OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide.none,
                       )),
                 ),

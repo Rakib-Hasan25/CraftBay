@@ -3,17 +3,8 @@ import 'package:ecommerce/data/model/product_data.dart';
 
 
 class ProductModel {
-
-
-
   String? _msg;
   List<ProductData>? _data;
-
-
-
-
-
-
 
   ProductModel({
       String? msg, 
@@ -21,9 +12,6 @@ class ProductModel {
     _msg = msg;
     _data = data;
 }
-
-
-
   ProductModel.fromJson(dynamic json) {
     _msg = json['msg'];
     if (json['data'] != null) {
@@ -34,22 +22,14 @@ class ProductModel {
     }
   }
 
-
-
-
-
 ProductModel copyWith({  String? msg,
   List<ProductData>? data,
 }) => ProductModel(  msg: msg ?? _msg,
   data: data ?? _data,
 );
 
-
   String? get msg => _msg;
   List<ProductData>? get data => _data;
-
-
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

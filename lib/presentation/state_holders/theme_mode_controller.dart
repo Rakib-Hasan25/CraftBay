@@ -1,69 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ThemeModeController {
-  ValueNotifier<ThemeMode> themeMode = ValueNotifier(ThemeMode.light);
-  
-  void changeThemeMode(ThemeMode mode){
-    themeMode.value=mode;
+
+ValueNotifier<ThemeMode> themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
+  ThemeModeController(){
+    _loadThemeMode();
+  }
+  Future<void> _loadThemeMode()async{
+          final pref =await SharedPreferences.getInstance();
+          final savedThemeMode = pref.getString('themeNotifier');
+          if (savedThemeMode == 'dark') {
+            themeNotifier.value = ThemeMode.dark;
+          } else if (savedThemeMode == 'light') {
+            themeNotifier.value = ThemeMode.light;
+          }
+          else{
+            themeNotifier.value = ThemeMode.light;// when savedThemeMode is null
+          }
   }
 
 
-  void toggleThemeMode(){
-    if(themeMode.value == ThemeMode.light){
-      themeMode.value = ThemeMode.dark;
-
-    }
-    else{
-      themeMode.value = ThemeMode.light;
-    }
-  }
-
-
-
-  void saveCurrentThemeMode(){
-    //joko  app restart kori tokon amader ager state harai jai
-    // mane aghe jodi dark mode e takhe , abar start howar somoi light mode
-    // e run hoi mane amader agher state ta harai jai eta ke dore rakte hobe
-
-
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
+Future<void>_saveThemeMode(ThemeMode mode)async{
+  final pref =await SharedPreferences.getInstance();
+   await pref.setString('themeNotifier', themeModeToString(mode));
 
 }
 
-
-/*   jokon oi value notifier er value change hobe tokonoi
-    valueNotifierbuilder er call hobe
-   valueNotifier hisabe thememode ke nilam , tai thememode change holei
-  valueNotifier builder build korbe eta jei onsho ke wrap kore ache
-
-
-  ValueListenableBuilder
-  (
-  valueListenable: jei variable er value change hobe
-  child: (jodi kono widget use korte chai punorai build na kore)
-  builder:(context,variable , widget(jei widget niye kaaj korte chai)tar name ,eta ke skip o kora ja
-  and jekono nam o deya jai(SKIP KORTE _ & use korte jekono nam)
-  {
-    biore kaaj
+String themeModeToString(ThemeMode mode) {
+  switch (mode) {
+    case ThemeMode.light:
+      return 'light';
+    case ThemeMode.dark:
+      return 'dark';
+    case ThemeMode.system:
+      return 'system';
   }
-
-  )
-
+}
 
 
-
- */
+  Future<void> toggleThemeMode()async{
+    if(themeNotifier.value == ThemeMode.light){
+      themeNotifier.value = ThemeMode.dark;
+     await _saveThemeMode( ThemeMode.dark);
+    }
+    else{
+      themeNotifier.value = ThemeMode.light;
+      await _saveThemeMode( ThemeMode.light);
+    }
+  }
+}

@@ -24,7 +24,7 @@ class _CatagoryListScreenState extends State<CatagoryListScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: ColorPalette.primaryColor,
+          // backgroundColor: ColorPalette.primaryColor,
           elevation: 0,
           leading: IconButton(
             onPressed: () {

@@ -1,4 +1,5 @@
 import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecommerce/presentation/ui/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +32,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
           'Carts',
@@ -114,6 +115,9 @@ class _CartScreenState extends State<CartScreen> {
               width: 120,
               child: ElevatedButton(
                         onPressed: (){
+                          if(Get.find<CartListController>().cartListModel.data?.isNotEmpty ?? false){
+                            Get.to(()=>CheckOutScreen());
+                          }
 
                         },
                         child:const Text('Checkout')
