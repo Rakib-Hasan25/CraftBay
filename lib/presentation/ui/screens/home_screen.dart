@@ -4,6 +4,7 @@ import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.
 import 'package:ecommerce/presentation/state_holders/popular_product_controller.dart';
 import 'package:ecommerce/presentation/state_holders/special_product_controller.dart';
 import 'package:ecommerce/presentation/state_holders/theme_mode_controller.dart';
+import 'package:ecommerce/presentation/ui/screens/auth/complete_profile_screen.dart';
 import 'package:ecommerce/presentation/ui/screens/product_list_screen.dart';
 import 'package:ecommerce/presentation/ui/utlis/image_assets.dart';
 import 'package:flutter/material.dart';
@@ -40,22 +41,24 @@ class _HomeScreenState extends State<HomeScreen> {
               const Spacer(),
               CircularIconButton(
                 icon: Icons.person,
-                onTap: () {},
+                onTap: () {
+                  Get.to( const CompleteProfileScreen());
+                },
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              CircularIconButton(
-                icon: Icons.call,
-                onTap: () {},
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              CircularIconButton(
-                icon: Icons.notification_important,
-                onTap: () {},
-              ),
+              // const SizedBox(
+              //   width: 10,
+              // ),
+              // CircularIconButton(
+              //   icon: Icons.call,
+              //   onTap: () {},
+              // ),
+              // const SizedBox(
+              //   width: 10,
+              // ),
+              // CircularIconButton(
+              //   icon: Icons.notification_important,
+              //   onTap: () {},
+              // ),
 
               const SizedBox(
                 width: 10,

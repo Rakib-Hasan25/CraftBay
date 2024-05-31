@@ -1,6 +1,7 @@
 import 'package:ecommerce/presentation/ui/utlis/color_palette.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomStepper extends StatefulWidget {
   CustomStepper(
       {super.key,
@@ -35,7 +36,7 @@ class _CustomStepperState extends State<CustomStepper> {
             InkWell(
               borderRadius: BorderRadius.circular(30),
               child: Container(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: ColorPalette.primaryColor,
                   borderRadius: BorderRadius.circular(2)

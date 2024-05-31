@@ -1,5 +1,6 @@
 import 'package:ecommerce/presentation/ui/screens/auth/otp_verification_screen.dart';
 import 'package:ecommerce/presentation/ui/screens/home_screen.dart';
+import 'package:ecommerce/presentation/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -85,7 +86,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 ),
                 TextFormField(
                   //validation er bepar ase tai
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       hintText: 'City'
                   ),
 
@@ -97,7 +98,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   //validation er bepar ase tai
                   maxLines: 6,
 
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       hintText: 'Shipping Address',
                       contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 16)
                   ),
@@ -111,7 +112,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   width: double.infinity,
                     child: ElevatedButton(
                         onPressed: () {
-                          Get.to(HomeScreen());
+                           Get.snackbar('Added to Cart',
+                            "this product has been added to cart list",
+                        snackPosition: SnackPosition.TOP);
+                          Get.offAll(MainBottomNavScreen());
                         }, child: Text('Complete')))
               ],
             ),
